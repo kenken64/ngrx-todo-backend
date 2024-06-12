@@ -26,7 +26,6 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import sg.edu.nus.iss.echodo.model.Todo;
-import sg.edu.nus.iss.echodo.repositories.TodoRepository;
 import sg.edu.nus.iss.echodo.services.FileUploadService;
 import sg.edu.nus.iss.echodo.services.TodoService;
 
@@ -101,7 +100,7 @@ public class FileUploadController {
                 .add("id", todo.getTodoId())
                 .add("title", todo.getTitle())
                 .add("description", todo.getTitle())
-                .add("audiofile", encodedString)
+                .add("audiofile", BASE64_PREFIX_DECODER + encodedString)
                 .add("status", todo.getStatus())
                 .build();
             arrBuilder.add(obj);
