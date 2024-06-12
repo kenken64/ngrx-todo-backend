@@ -4,17 +4,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Todo {
-    private String complain;
+    private Integer todoId;
+    private String description;
     private String title;
-    private byte[] image;
-    public String getComplain() {
-        return complain;
+    private String status;
+    private byte[] audioFile;
+
+    
+    public String getStatus() {
+        return status;
     }
 
-    public void setComplain(String complain) {
-        this.complain = complain;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public String getTitle() {
         return title;
     }
@@ -23,30 +35,34 @@ public class Todo {
         this.title = title;
     }
 
-    public byte[] getImage() {
-        return image;
+    
+    public Integer getTodoId() {
+        return todoId;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setTodoId(Integer todoId) {
+        this.todoId = todoId;
     }
 
-    public Integer getPostId() {
-        return postId;
+    public byte[] getAudioFile() {
+        return audioFile;
     }
 
-    public void setPostId(Integer postId) {
-        this.postId = postId;
+    public void setAudioFile(byte[] audioFile) {
+        this.audioFile = audioFile;
     }
-
-    private Integer postId;
 
     public static Todo populate(ResultSet rs) throws SQLException {
-        final Todo post = new Todo();
-        post.setPostId(rs.getInt("id"));
-        post.setComplain(rs.getString("complain"));
-        post.setTitle(rs.getString("title"));
-        post.setImage(rs.getBytes("blobc"));
-        return post;
+        final Todo td = new Todo();
+        td.setTodoId(rs.getInt("id"));
+        td.setTitle(rs.getString("title"));
+        td.setDescription(rs.getString("description"));
+        td.setAudioFile(rs.getBytes("recorded_audio"));
+        td.setStatus(rs.getString("status"));
+        return td;
     }
+
+    
+
+    
 }

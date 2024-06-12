@@ -19,10 +19,10 @@ import sg.edu.nus.iss.echodo.model.Todo;
 
 @Repository
 public class FileUploadRepository {
-    private static final String INSERT_TODO_TBL = "INSERT INTO todo (recorded_audio, title, description) VALUES(?, ?, ?)";
+    private static final String INSERT_TODO_TBL = "INSERT INTO todo (recorded_audio, title, description, status) VALUES(?, ?, ?, ?)";
     
     private static final String SQL_GET_TODO_BY_POST_ID = 
-       "select id, title, description, recorded_audio from todo where id=?";
+       "select id, title, description, recorded_audio, status from todo where id=?";
 
     @Autowired
     private DataSource dataSource;
@@ -31,7 +31,7 @@ public class FileUploadRepository {
     private JdbcTemplate template;
 
 
-    public void uploadBlob(MultipartFile file, String title, String complain) 
+    public void uploadBlob(MultipartFile file, String title, String description) 
             throws SQLException, IOException  {
         
         try (Connection con = dataSource.getConnection();
@@ -39,7 +39,8 @@ public class FileUploadRepository {
             InputStream is = file.getInputStream();
             pstmt.setBinaryStream(1, is, file.getSize());
             pstmt.setString(2, title);
-            pstmt.setString(3, complain);
+            pstmt.setString(3, description);
+            pstmt.setString(4, "0");
             pstmt.executeUpdate();
         }
     }
